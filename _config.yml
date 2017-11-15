@@ -1,1 +1,4 @@
+name: Portfolio
+markdown: redcarpet
+pygments: true
 baseurl: /portfolio
