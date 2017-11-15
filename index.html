@@ -1,18 +1,59 @@
-<!DOCTYPE html>
 <html>
 <head>
-<title>PREM2K17</title>
-<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.14/angular.min.js"></script>
-  <meta charset="utf-8">
-  <title>JS Bin</title>
+	<title>PREM2K17</title>
 </head>
 <body ng-app="myApp">
-  <div ng-controller="CtrlOne">Hello, {{name}}</div>
-  <script>
-    var myApp = angular.module("myApp", []);
-    myApp.controller("CtrlOne", function ($scope) {
-      $scope.name = "Andre";
-    });
-  </script>
+	<h1>WELCOME TEST PAGE..</h1>	
+
+<div ng-controller="MainCtrl">
+  <ul>
+    <li><a ui-sref="home" ng-class="{active: $state.current.name == 'home'}">Home</a></li>
+    <li><a ui-sref="about" ng-class="{active: $state.current.name == 'about'}">About</a></li>
+    <li><a ui-sref="contact" ui-sref-active="active">Contact</a></li>
+  </ul>
+  <hr/>
+  <div ui-view></div> 
+</div>
+
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.10/angular.js"></script>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.0/angular-ui-router.js"></script>
+	<script type="text/ng-template" id="home.html">
+  Home page<br/>
+  <p>
+      Another link to: <a ui-sref="about">About</a>. <br/>
+         This link should navigate and the top links should update the active class automatically.{{$state.current.name}}
+  </p>
+</script>
+<script type="text/ng-template" id="about.html">
+  About page<br/>
+  Another link to: <a ui-sref="contact">contact</a>
+</script>
+<script type="text/ng-template" id="contact.html">
+  Contact page
+</script>
+<script>
+var app = angular.module( "myApp", ['ui.router'] );
+
+app.config( function ( $routeProvider, $stateProvider ) {    
+   $stateProvider.state('home',{
+        url: '/home',
+        templateUrl: 'home.html'
+      })
+      .state('about',{
+        url: '/about',
+        templateUrl: 'about.html'
+      })
+      .state('contact',{
+        url: '/contact',
+        templateUrl: 'contact.html'
+      }); 
+});
+
+app.controller( 'MainCtrl', function ( $scope, $state ) {
+	alert("temp");
+    $scope.$state = $state;
+});
+</script>
+
 </body>
 </html>
