@@ -4,5 +4,55 @@
 </head>
 <body>
 	<h1>WELCOME TEST PAGE..</h1>
+	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.10/angular.min.js"></script>
+	<script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.0/angular-ui-router.js"></script>
+	<script type="text/ng-template" id="home.html">
+  Home page<br/>
+  <p>
+      Another link to: <a ui-sref="about">About</a>. <br/>
+         This link should navigate and the top links should update the active class automatically.{{$state.current.name}}
+  </p>
+</script>
+<script type="text/ng-template" id="about.html">
+  About page<br/>
+  Another link to: <a ui-sref="contact">contact</a>
+</script>
+<script type="text/ng-template" id="contact.html">
+  Contact page
+</script>
+
+<div ng-controller="MainCtrl">
+  <ul>
+    <li><a ui-sref="home" ng-class="{active: $state.current.name == 'home'}">Home</a></li>
+    <li><a ui-sref="about" ng-class="{active: $state.current.name == 'about'}">About</a></li>
+    <li><a ui-sref="contact" ui-sref-active="active">Contact</a></li>
+  </ul>
+  <hr/>
+  <div ui-view></div> 
+</div>
+
+<script>
+var app = angular.module( "myApp", ['ui.router'] );
+
+app.config( function ( $routeProvider, $stateProvider ) {    
+   $stateProvider.state('home',{
+        url: '/home',
+        templateUrl: 'home.html'
+      })
+      .state('about',{
+        url: '/about',
+        templateUrl: 'about.html'
+      })
+      .state('contact',{
+        url: '/contact',
+        templateUrl: 'contact.html'
+      }); 
+});
+
+app.controller( 'MainCtrl', function ( $scope, $state ) {
+    $scope.$state = $state;
+});
+</script>
+
 </body>
 </html>
